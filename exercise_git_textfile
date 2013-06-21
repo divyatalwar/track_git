@@ -1,0 +1,341 @@
+1. Create a repository 
+git init ( intializes a local repository)
+
+
+
+
+2.Make some changes -- add some files, change content of some files 
+steps : 
+echo "hi this is my first file" > first.txt 
+echo "hi this is my secnd file" > second.txt 
+echo "hi this is my third file" > third.txt 
+vi first.txt 
+make changes using insert mode 
+save changes using :wq 
+
+
+
+3.commit changes 
+git add first.txt secnd.txt third.txt 
+git status 
+# On branch master 
+# Changes to be committed: 
+#   (use "git reset HEAD <file>..." to unstage) 
+# 
+#	new file:   first.txt 
+#	new file:   second.txt 
+#	new file:   third.txt 
+
+git commit - m "first commit" 
+[master bf9481d] first commit 
+ 3 files changed, 3 insertions(+) 
+ create mode 100644 first.txt 
+ create mode 100644 second.txt 
+ create mode 100644 third.txt 
+
+
+
+
+4.repeat steps 1-3 for 2 more times. try to remove and ignore some files . Use git diff before each commit 
+
+git rm third.txt 
+git status 
+git diff HEAD 
+diff --git a/third.txt b/third.txt 
+deleted file mode 100644 
+index 1a41114..0000000 
+--- a/third.txt 
++++ /dev/null 
+@@ -1 +0,0 @@ 
+-hi this is my third file 
+
+echo "hi this is my fourth file" > four.txt 
+echo "hi this is my fifth file" > five.txt 
+git diff HEAD^ 
+diff --git a/five.txt b/five.txt 
+new file mode 100644 
+index 0000000..18499ea 
+--- /dev/null 
++++ b/five.txt 
+@@ -0,0 +1 @@ 
++this is my fifth 
+diff --git a/four.txt b/four.txt 
+new file mode 100644 
+index 0000000..132706f 
+--- /dev/null 
++++ b/four.txt 
+@@ -0,0 +1 @@ 
++this is my fourth 
+diff --git a/third.txt b/third.txt 
+deleted file mode 100644 
+index 1a41114..0000000 
+--- a/third.txt 
++++ /dev/null 
+@@ -1 +0,0 @@ 
+-hi this is my third file 
+
+
+
+
+
+5.create changes and revert those changes using git when those changes are not added to staging are 
+vi first.txt 
+cat first.txt
+changes made:
+hii this is my first file.
+git checkout first 
+cat first.txt 
+hi this is my first file 
+
+
+6. create changes and revert those changes after adding changes to staging area 
+
+vi first.txt 
+cat first.txt 
+changed: 
+this is my first file 
+git add first.txt
+git reset - -hard HEAD 
+cat first.txt 
+this is my first file 
+
+7.create change and revert those changes after committing those changes . 
+vi first.txt 
+cat first.txt 
+hola file changed !! 
+git add first.txt 
+git commit -m "first.txt" 
+git reset --hard HEAD^ 
+cat first.txt 
+this is my first file 
+
+
+
+8.Check repository status before adding changes to staging area, after adding changes to staging area and after committing changes . 
+vi first.txt 
+cat first.txt 
+changed: 
+this is my first file 
+git status 
+# On branch master 
+# Your branch is ahead of 'origin/master' by 2 commits. 
+# 
+# Changes not staged for commit: 
+#   (use "git add <file>..." to update what will be committed) 
+#   (use "git checkout -- <file>..." to discard changes in working directory) 
+# 
+#	modified:   first.txt 
+# 
+# Untracked files: 
+#   (use "git add <file>..." to include in what will be committed) 
+
+git add first.txt 
+git status 
+On branch master 
+# Your branch is ahead of 'origin/master' by 2 commits. 
+# 
+# Changes to be committed: 
+#   (use "git reset HEAD <file>..." to unstage) 
+# 
+#	modified:   first.txt 
+# 
+# Untracked files: 
+#   (use "git add <file>..." to include in what will be committed) 
+# 
+git commit -m "third" 
+git status 
+[master 6ce6648] third 
+ 1 file changed, 1 insertion(+) 
+nishant@Nishant-PC:~/test/test1$ git status 
+# On branch master 
+# Your branch is ahead of 'origin/master' by 3 commits. 
+# 
+# Untracked files: 
+#   (use "git add <file>..." to include in what will be committed) 
+
+
+
+9. Display all the commits . 
+git log 
+
+commit 6ce66483cea4448b1686d457da3b8b5e88370a25 
+Author: divya <divya@vinsol.com> 
+Date:   Fri Jun 21 13:13:10 2013 +0530 
+
+    third 
+
+commit 7621ba745a345246d1455f9b78c68974069ab5f6 
+Author: divya <divya@vinsol.com> 
+Date:   Fri Jun 21 12:45:26 2013 +0530 
+
+    secnd commit 
+
+commit bf9481dfc3e87d4def4d9e1c3f34e2e720df2f91 
+Author: divya <divya@vinsol.com> 
+Date:   Fri Jun 21 12:31:16 2013 +0530 
+
+    first commit 
+
+
+
+
+10. Display a specific commit . 
+for eg :if we have to display the second commit use SHA hash of the second commit 
+git show SHA hash of secnd commit 
+that is 
+git show 7621ba745a345246d1455f9b78c68974069ab5f6 
+commit 7621ba745a345246d1455f9b78c68974069ab5f6 
+Author: divya <divya@vinsol.com> 
+Date:   Fri Jun 21 12:45:26 2013 +0530 
+ 
+    secnd commit 
+
+diff --git a/five.txt b/five.txt 
+new file mode 100644 
+index 0000000..18499ea 
+--- /dev/null 
++++ b/five.txt 
+@@ -0,0 +1 @@ 
++this is my fifth 
+diff --git a/four.txt b/four.txt 
+new file mode 100644 
+index 0000000..132706f 
+--- /dev/null 
++++ b/four.txt 
+@@ -0,0 +1 @@ 
++this is my fourth 
+diff --git a/third.txt b/third.txt 
+deleted file mode 100644 
+index 1a41114..0000000 
+
+
+
+
+11.create branches called "feature1" and "feature2" from master. 11 . Delete branch "feature2" 
+git branch feature1 feature2 
+git branch -d feature2 
+
+
+
+12.Make some commits on "feature1". 
+git checkout feature1 
+vi first.txt 
+git add first.txt 
+git commit -m "changes to the feature1 branch" 
+
+
+
+
+13.Make some commits on branch "master". 
+git checkout master 
+vi first.txt 
+git add first.txt 
+git commit -m "changes to the master branch" 
+
+
+
+14.merge branch "feature1" in "master" (make some conflicts by changing same file on same line in both the branches) 
+git checkout feature1 
+vi second.txt 
+git add second.txt 
+git commit -m "merging" 
+git checkout master 
+vi second.txt 
+git add second.txt 
+git commit -m "merging" / 
+git merge feature1 //merge conflict arises 
+ 
+auto-merging first.txt 
+CONFLICT (content): Merge conflict in first.txt 
+Automatic merge failed; fix conflicts and then commit the result. 
+
+git status 
+# On branch master 
+# Unmerged paths: 
+#   (use "git add/rm <file>..." as appropriate to mark resolution) 
+# 
+#	both modified:      first.txt 
+# 
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+
+//make changes in file manually using a text editor 
+and then adding to the staging area and commit 
+git status 
+# On branch master 
+# Untracked files: 
+#   (use "git add <file>..." to include in what will be committed) 
+# 
+#	first.txt~ 
+nothing added to commit but untracked files present (use "git add" to track) 
+
+
+
+
+
+15.create branch "feature2" from master .Make some commits on "feature2". 
+
+git checkout -b feature2 
+vi first.txt 
+git add first.txt 
+git commit -m "changes to the branch and commiting" 
+
+
+
+16.Make some commits on branch "master". 
+ git checkout master 
+vi first.txt 
+git add first.txt 
+git commit -m "changes to the master branch" 
+
+
+
+17.rebase branch "master" in "feature2" (make some conflicts by changing same file on same line in both the branches) 
+git checkout master 
+vi first.txt 
+git commit -am "rebasing" 
+git checkout feature2 
+vi first.txt 
+git commit -am "rebasing on branch" 
+git rebase master //conflict arises 
+First, rewinding head to replay your work on top of it... 
+Applying: first.txt 
+Using index info to reconstruct a base tree... 
+Falling back to patching base and 3-way merge... 
+Auto-merging first.txt 
+CONFLICT (content): Merge conflict in first.txt 
+Failed to merge in the changes. 
+Patch failed at 0001 first.txt 
+
+When you have resolved this problem run "git rebase --continue". 
+If you would prefer to skip this patch, instead run "git rebase --skip". 
+To check out the original branch and stop rebasing run "git rebase --abort". 
+
+
+//edit first.txt manually 
+git add first.txt 
+git rebase --continue 
+
+applying:first.txt 
+
+
+18: find the differences between "merge" and "rebase" in above cases.
+In rebase a temporary space is created where the changes made to master branch are moved...then feature 1 commits are run and thereafter the master commits are run on top of it. 
+whereas in merge no such thing takes place 
+
+
+
+
+19.Use git stash 
+vi first.txt 
+git stash 
+git stash list 
+git stash pop 
+git stash list 
+
+
+
+20.create a repository on github for your working repository and push changes on remote repository. 
+git remote add abc https://github.com/divyatalwar/divyaa.git
+git push -u abc  master 
+
